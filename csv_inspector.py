@@ -7,12 +7,15 @@ import matplotlib.pyplot as plt
 st.title("Data Explorer")
 
 # File uploader
-uploaded_file = st.file_uploader("Upload CSV File", type="csv")
+uploaded_file = st.file_uploader("Upload CSV or Excel File", type=["csv", "xlsx"])
 
 # Initialize DataFrame
 df = None
 if uploaded_file is not None:
-    df = pd.read_csv(uploaded_file)
+    if uploaded_file.name.endswith(".csv"):
+        df = pd.read_csv(uploaded_file)
+    elif uploaded_file.name.endswith(".xlsx"):
+        df = pd.read_excel(uploaded_file)
     st.write("File uploaded successfully!")
     st.write(f"DataFrame shape: {df.shape}")
 
